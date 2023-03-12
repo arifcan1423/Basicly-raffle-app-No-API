@@ -15,36 +15,43 @@ start_btn.addEventListener("click",()=>{
     let names = txtNamesInput.value.split(",");
     console.log(names);
 
+    if(names.length < winner_number.value){
+        alert("İstenilen sayıda kişi girilmedi!");
+    }
+    else{
+        
+        for(let i=0; i<winner_number.value ; i++){
+            let number = Math.floor(Math.random()*names.length);
 
-    for(let i=0; i<winner_number.value ; i++){
-        let number = Math.floor(Math.random()*names.length);
-
-        if(numbers.indexOf(number) == -1){
-            numbers.push(number);
+            if(numbers.indexOf(number) == -1){
+                numbers.push(number);
+            }
+            else{
+                i--;
+            }
         }
-        else{
-            i--;
+
+        for(let i=0; i<winner_number.value ; i++){
+            winner_people.push(names[numbers[i]]);
         }
-    }
-
-
-    for(let i=0; i<winner_number.value ; i++){
-        winner_people.push(names[numbers[i]]);
-    }
     
-    for(let i=0; i<winner_people.length ; i++ ){
-        let winner = `
-            <span class="winner_person"><b>${i+1}-</b>${winner_people[i]}</span>
-        `;
+        for(let i=0; i<winner_people.length ; i++ ){
+            let winner = `
+                <span class="winner_person"><b>${i+1}-</b>${winner_people[i]}</span>
+            `;
 
-        winners_list.insertAdjacentHTML("beforeend",winner);
+            winners_list.insertAdjacentHTML("beforeend",winner);
+        }
+
+        numbers.splice(0,numbers.length);
+        winner_people.splice(0,winner_people.length);
+    
+        main_menu.classList.add("hide");
+        second_menu.classList.remove("hide");
     }
 
-    numbers.splice(0,numbers.length);
-    winner_people.splice(0,winner_people.length);
-    
-    main_menu.classList.add("hide");
-    second_menu.classList.remove("hide");
+
+
 });
 
 repeat_btn.addEventListener("click",()=>{
